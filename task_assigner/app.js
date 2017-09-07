@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
+var mongo = require('mongodb');
 
-app.use(express.static(__dirname + "/views"));
+app.use(express.static(__dirname + "/public"));
 
 app.listen(3000);
 console.log("Server running on port 3000");
