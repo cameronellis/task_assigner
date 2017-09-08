@@ -67,6 +67,7 @@
         <h2 class="text-center">The Tasks</h2>
         <hr class="star-primary">
         <h4 class="text-center">What tasks need to be done?</h4>
+
         <div id="content"></div>
         <input type="button" value="+" onclick="addRow()" class="btn btn-success btn-lg"></input>
     </section>
@@ -77,7 +78,9 @@
         <h2 class="text-center">The People</h2>
         <hr class="star-light">
         <h4 class="text-center">Who all needs to do them?</h4>
-        <input type="button" value="+" class="btn btn-lg btn-outline"></input>
+        <input type="button" value="+"      class="btn btn-lg btn-outline"></input>
+        <br></br>
+        <input type="button" value="Submit" class="btn btn-lg btn-outline" onclick="submit()"></input>
       </div>
     </section>
 
@@ -127,20 +130,38 @@
 
     <!-- another script -->
     <script>
+
+      var inputBoxCount = 0;
+
       function addRow() {
         var div = document.createElement('div');
 
         div.className = 'row';
 
-        div.innerHTML = '<input type="text" name="name" value="" />\
-          <input type="button" value="-" onclick="removeRow(this)" class="btn btn-success btn-lg">';
+        div.innerHTML = "<input type='text' name='name' id= '"+inputBoxCount+"'/>\
+          <input type='button' value='-' onclick='removeRow(this)' class='btn btn-success btn-lg'>";
 
         document.getElementById('content').appendChild(div);
+
+        inputBoxCount += 1;
       }
 
       function removeRow(input) {
         document.getElementById('content').removeChild( input.parentNode );
       }
+      
+      function submit(){
+        console.log("Hello world");
+        for(i = 0; i < inputBoxCount; i++){
+          try{
+              console.log(document.getElementById(i).value);
+            }
+            catch(TypeError){
+            }
+          
+        }
+      }
+
     </script>
   </body>
 
