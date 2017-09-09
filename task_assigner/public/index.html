@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Task Assigner - Distribute simple tasks amongst you and your peers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -92,7 +92,7 @@
         <h2 class="text-center">The results</h2>
         <hr class="star-primary">
         <h4 class="text-center">Who's doing what</h4>
-
+        <div id="output_table"></div>
       </div>
     </section>
 
@@ -194,14 +194,115 @@
         console.log(tasks);
         console.log(people);
 
-        // put the task distribution function here
+        var tableToDisplay = distributeTasks(tasks, people.length);
+        console.log(tableToDisplay);
+
+        // append names to the front of tasks
+        appendNames(people, tableToDisplay);
+
+        console.log(tableToDisplay)
+
+        // pass tableToDisplay into a function to display in html
+        displayTable(tableToDisplay);
 
         tasks = [];
         people = [];
       }
 
-      function distributeTasks(tasks, people){
-        
+      function distributeTasks(tasks, numberOfPeople){
+        // output
+        var outputArray = [];
+        for(var i = 0; i < numberOfPeople; i++){
+            outputArray.push([]);
+        }
+
+        var origValOftasks = tasks.length;
+        var index = 0;
+        var taskCounter = 0;
+        var tasksPerPerson = Math.floor(tasks.length / numberOfPeople);
+        var randomIndexIntasks = 0;
+
+        // if tasks.length > numberOfPeople
+        if(/**tasks.length > numberOfPeople **/ true){
+            // populate output array
+            for(var i = 0; i < tasksPerPerson * numberOfPeople; i++){
+
+                randomIndexIntasks = Math.floor((Math.random() * tasks.length));
+
+                if(taskCounter < tasksPerPerson){
+                    outputArray[index].push(tasks[randomIndexIntasks]);
+                    taskCounter++;
+                }
+                else{
+                    index++;
+                    outputArray[index].push(tasks[randomIndexIntasks]);
+                    taskCounter = 1;
+                }
+                // remove this value from the array
+                tasks.splice(randomIndexIntasks,1);  
+            }
+
+            var numberOfRemainingElemsIntasks = tasks.length;
+
+            // randomly pick a letter from the remaining letters
+            for(var i = 0; i < numberOfRemainingElemsIntasks; i++){
+                randomIndexIntasks = Math.floor((Math.random() * tasks.length));
+
+                outputArray[i].push(tasks[randomIndexIntasks]);
+
+                tasks.splice(randomIndexIntasks, 1);
+            }   
+        }
+        // numberOfPeople > tasks.length
+        else{
+            
+        }
+
+        return outputArray;
+      }
+
+      function appendNames(people, tableToDisplay){
+        for(var i = 0; i < tableToDisplay.length; i++){
+          tableToDisplay[i].unshift(people[i]);
+        }
+      }
+
+      function displayTable(tableToDisplay){
+        var myTableDiv = document.getElementById("output_table")
+        var table = document.createElement('TABLE')
+        var tableBody = document.createElement('TBODY')
+
+        table.border = '1'
+        table.appendChild(tableBody);
+
+        var heading = new Array();
+        heading[0] = "Name"
+        heading[1] = "Task 1"
+        heading[2] = "Task 2"
+        heading[3] = "Task 3"
+        heading[4] = "Task 4"
+
+        //TABLE COLUMNS
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+        for (i = 0; i < heading.length; i++) {
+          var th = document.createElement('TH')
+          th.width = '75';
+          th.appendChild(document.createTextNode(heading[i]));
+          tr.appendChild(th);
+        }
+
+        //TABLE ROWS
+        for (i = 0; i < tableToDisplay.length; i++) {
+          var tr = document.createElement('TR');
+          for (j = 0; j < tableToDisplay[i].length; j++) {
+            var td = document.createElement('TD')
+            td.appendChild(document.createTextNode(tableToDisplay[i][j]));
+            tr.appendChild(td)
+          }
+          tableBody.appendChild(tr);
+        }
+        myTableDiv.appendChild(table)
       }
 
     </script>
