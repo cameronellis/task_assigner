@@ -37,13 +37,16 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">The Tasks</a>
+              <a class="nav-link js-scroll-trigger" href="#tasks">The Tasks</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">The People</a>
+              <a class="nav-link js-scroll-trigger" href="#people">The People</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">The Results</a>
+              <a class="nav-link js-scroll-trigger" href="#results">The Results</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#savedResults">Saved Results</a>
             </li>
           </ul>
         </div>
@@ -61,8 +64,8 @@
       </div>
     </header>
 
-    <!-- Portfolio Grid Section -->
-    <section id="portfolio">
+    <!-- Tasks Section -->
+    <section id="tasks">
       <div class="container">
         <h2 class="text-center">The Tasks</h2>
         <hr class="star-primary">
@@ -73,8 +76,8 @@
 
     </section>
 
-    <!-- About Section -->
-    <section class="success" id="about">
+    <!-- People Section -->
+    <section class="success" id="people">
       <div class="container">
         <h2 class="text-center">The People</h2>
         <hr class="star-light">
@@ -87,13 +90,32 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
+    <!-- Results Section -->
+    <section id="results">
       <div class="container">
         <h2 class="text-center">The results</h2>
         <hr class="star-primary">
         <h4 class="text-center">Who's doing what</h4>
         <div id="output_table"></div>
+        <h4 class="text-center">Save Results?</h4>
+        <input type="button" value="Save" onclick="saveResults()" class="btn btn-success btn-lg"></input>
+      </div>
+    </section>
+
+    <!-- Save Results for Later? -->
+    <section id="savedResults">
+      <div class="container">
+        <h2 class="text-center">Saved Results</h2>
+        <hr class="star-primary">
+        <table>
+          <tbody>
+            <tr>
+              <td>resultName</td>
+              <td><button class="btn btn-success">Display</button></td>
+              <td><button class="btn btn-danger">Remove</button></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 

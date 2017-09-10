@@ -68,6 +68,7 @@
         // pass tableToDisplay into a function to display in html
         displayTable(tableToDisplay);
 
+        // once table has been displayed, empty the tasks and people arrays
         tasks = [];
         people = [];
         longestSubList = 0;
@@ -95,7 +96,7 @@
         var tasksPerPerson = Math.floor(tasks.length / numberOfPeople);
         var randomIndexIntasks = 0;
 
-        // if tasks.length > numberOfPeople
+        // if tasks.length > numberOfPeople - come back to this later
         if(/**tasks.length > numberOfPeople **/ true){
             // populate output array
             for(var i = 0; i < tasksPerPerson * numberOfPeople; i++){
@@ -136,8 +137,6 @@
 
       function appendNames(people, tableToDisplay){
         for(var i = 0; i < tableToDisplay.length; i++){
-          
-          // do BEFORE appending a name to the front!
           if(longestSubList < tableToDisplay[i].length){
             longestSubList = tableToDisplay[i].length;
           }
@@ -147,9 +146,9 @@
       }
 
       function displayTable(tableToDisplay){
-        var myTableDiv = document.getElementById("output_table")
-        var table = document.createElement('TABLE')
-        var tableBody = document.createElement('TBODY')
+        var myTableDiv = document.getElementById("output_table");
+        var table = document.createElement('TABLE');
+        var tableBody = document.createElement('TBODY');
 
         table.border = '1'
         table.appendChild(tableBody);
@@ -179,5 +178,5 @@
           }
           tableBody.appendChild(tr);
         }
-        myTableDiv.appendChild(table);        
+        myTableDiv.appendChild(table);       
       }
