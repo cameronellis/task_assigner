@@ -134,6 +134,8 @@
     <!-- another script -->
     <script>
 
+      var longestSubList = 0;
+
       var taskInputBoxCount = 0;
       var tasks = [];
 
@@ -191,22 +193,30 @@
           catch(TypeError){}
         }
 
-        console.log(tasks);
-        console.log(people);
-
         var tableToDisplay = distributeTasks(tasks, people.length);
-        console.log(tableToDisplay);
 
         // append names to the front of tasks
         appendNames(people, tableToDisplay);
 
-        console.log(tableToDisplay)
+        // remove table from html
+        var myTableDiv = document.getElementById("output_table");
+        myTableDiv.innerHTML = '';
+        while (myTableDiv.firstChild) {
+          myTableDiv.removeChild(myTableDiv.firstChild);
+        }
 
         // pass tableToDisplay into a function to display in html
         displayTable(tableToDisplay);
 
         tasks = [];
         people = [];
+        longestSubList = 0;
+      }
+
+      function removeOutputTable(){
+        var myTableDiv = document.getElementById("output_table");
+        var table = document.createElement('TABLE');
+        myTableDiv.removeChild(table);        
       }
 
       function distributeTasks(tasks, numberOfPeople){
@@ -263,6 +273,12 @@
 
       function appendNames(people, tableToDisplay){
         for(var i = 0; i < tableToDisplay.length; i++){
+          
+          // do BEFORE appending a name to the front!
+          if(longestSubList < tableToDisplay[i].length){
+            longestSubList = tableToDisplay[i].length;
+          }
+
           tableToDisplay[i].unshift(people[i]);
         }
       }
@@ -275,12 +291,10 @@
         table.border = '1'
         table.appendChild(tableBody);
 
-        var heading = new Array();
-        heading[0] = "Name"
-        heading[1] = "Task 1"
-        heading[2] = "Task 2"
-        heading[3] = "Task 3"
-        heading[4] = "Task 4"
+        var heading = ["Name"];
+        for(var i = 0; i < longestSubList; i++){
+          heading.push("Task " + (i+1))
+        }
 
         //TABLE COLUMNS
         var tr = document.createElement('TR');
@@ -302,7 +316,7 @@
           }
           tableBody.appendChild(tr);
         }
-        myTableDiv.appendChild(table)
+        myTableDiv.appendChild(table);        
       }
 
     </script>
