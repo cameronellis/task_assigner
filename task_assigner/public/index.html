@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="taskAssigner" ng-controller="controlResults">
 
   <head>
 
@@ -61,7 +61,7 @@
           <hr class="star-light">
           <span class="skills">Distribute simple tasks amongst you and your peers</span>
         </div>
-        <div class="d-lg-none">
+        <div>
           <!-- button to transition to next section -->
           <a class="btn btn-lg btn-outline js-scroll-trigger" href="#tasks">
             <i class="fa fa-chevron-down"></i>
@@ -117,7 +117,13 @@
         <hr class="star-primary">
         <h4 class="text-center">Who's doing what</h4>
         <div id="output_table"></div>
-        <input type="button" value="Save Results" onclick="saveResults()" class="btn btn-success btn-lg"></input>
+        <h4 class="text-center">Need to save the results?</h4>
+        <!-- Save results to a database -->
+        <div>
+          <input type="text" placeholder="Result name" ng-model="resultName"></input>
+          <input type="button" value="Save Result" ng-click="addResult()"></input>
+        </div>
+        Result Name: {{resultName}}
       </div>
     </section>
 
@@ -131,14 +137,14 @@
             <tr>
               <td>Result Name</td>
               <td>Display Result</td>
-              <td>Delete Result</td>
+              <td>Remove Result</td>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>resultName</td>
-              <td><button class="btn btn-success">Display</button></td>
-              <td><button class="btn btn-danger">Remove</button></td>
+              <td><button class="btn btn-success" ng-click="displayResult()">Display</button></td>
+              <td><button class="btn btn-danger"  ng-click="removeResult()">Remove</button></td>
             </tr>
           </tbody>
         </table>
@@ -179,6 +185,9 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
+
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
     <!-- Main logic for front end of app - get input & output result table -->
     <script src="js/mainLogic.js"></script>
