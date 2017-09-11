@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/cameronellis/task_assigner#readme",
   "dependencies": {
+    "body-parser": "^1.18.0",
     "mongodb": "^2.2.31"
   }
 }
