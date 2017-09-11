@@ -1,182 +1,219 @@
-      var longestSubList = 0;
+var longestSubList = 0;
 
-      var taskInputBoxCount = 0;
-      var tasks = [];
+var taskInputBoxCount = 0;
+var tasks = [];
 
-      var peopleInputBoxCount = 0;
-      var people = [];
+var peopleInputBoxCount = 0;
+var people = [];
 
-      function addTaskRow() {
-        var div = document.createElement('div');
+var outputArray = [];
 
-        div.className = 'row';
+function addTaskRow() {
+  var div = document.createElement('div');
 
-        // append a to the front to have a unique id for tasks vs people
-        div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
-          <input type='button' value='-' onclick='removeTaskRow(this)'>";
+  div.className = 'row';
 
-        document.getElementById('taskContent').appendChild(div);
+  // append a to the front to have a unique id for tasks vs people
+  div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
+    <input type='button' value='-' onclick='removeTaskRow(this)'>";
 
-        taskInputBoxCount += 1;
-      }
+  document.getElementById('taskContent').appendChild(div);
 
-      function removeTaskRow(input) {
-        document.getElementById('taskContent').removeChild( input.parentNode );
-      }
+  taskInputBoxCount += 1;
+}
+
+function removeTaskRow(input) {
+  document.getElementById('taskContent').removeChild( input.parentNode );
+}
       
-      function addPeopleRow(){
-        var div = document.createElement('div');
+function addPeopleRow(){
+  var div = document.createElement('div');
 
-        div.className = 'row';
+  div.className = 'row';
 
-        div.innerHTML = "<input type='text' name='name' id= '"+"b"+peopleInputBoxCount+"'/>\
-          <input type='button' value='-' onclick='removePeopleRow(this)'>";
+  div.innerHTML = "<input type='text' name='name' id= '"+"b"+peopleInputBoxCount+"'/>\
+    <input type='button' value='-' onclick='removePeopleRow(this)'>";
       
-        document.getElementById('peopleContent').appendChild(div);
+  document.getElementById('peopleContent').appendChild(div);
 
-        peopleInputBoxCount += 1;
+  peopleInputBoxCount += 1;
+}
+
+function removePeopleRow(input) {
+  document.getElementById('peopleContent').removeChild( input.parentNode );
+}
+
+function submit(){
+  // once table has been displayed, empty the tasks and people arrays
+  tasks = [];
+  people = [];
+  longestSubList = 0;
+
+  // obtain tasks from input fields and populate them into an array
+  for(i = 0; i < taskInputBoxCount; i++){
+    try{
+      tasks.push(document.getElementById("a"+i).value);
+    }
+    catch(TypeError){}
+  }
+  // obtain people from input fields and populate them into an array
+  for(i = 0; i < peopleInputBoxCount; i++){
+    try{
+      people.push(document.getElementById("b"+i).value);
+    }
+    catch(TypeError){}
+  }
+
+  var tableToDisplay = distributeTasks(tasks, people.length);
+
+  // append names to the front of tasks
+  appendNames(people, tableToDisplay);
+
+  // remove table from html
+  removeOutputTable();
+
+  console.log("people: " + people);
+  console.log("tableToDisplay: " + tableToDisplay);
+
+  // pass tableToDisplay into a function to display in html
+  displayTable(tableToDisplay);
+
+}
+
+// remove output table from html
+function removeOutputTable(){
+  var myTableDiv = document.getElementById("output_table");
+  while (myTableDiv.firstChild) {
+    myTableDiv.removeChild(myTableDiv.firstChild);
+  }      
+}
+
+function distributeTasks(tasks, numberOfPeople){
+  // output
+
+  for(var i = 0; i < numberOfPeople; i++){
+    outputArray.push([]);
+  }
+
+  var origValOftasks = tasks.length;
+  var index = 0;
+  var taskCounter = 0;
+  var tasksPerPerson = Math.floor(tasks.length / numberOfPeople);
+  var randomIndexIntasks = 0;
+
+  // if tasks.length > numberOfPeople - come back to this later
+  if(/**tasks.length > numberOfPeople **/ true){
+    // populate output array
+    for(var i = 0; i < tasksPerPerson * numberOfPeople; i++){
+
+      randomIndexIntasks = Math.floor((Math.random() * tasks.length));
+
+      if(taskCounter < tasksPerPerson){
+        outputArray[index].push(tasks[randomIndexIntasks]);
+        taskCounter++;
       }
-
-      function removePeopleRow(input) {
-        document.getElementById('peopleContent').removeChild( input.parentNode );
+      else{
+        index++;
+        outputArray[index].push(tasks[randomIndexIntasks]);
+        taskCounter = 1;
       }
+      // remove this value from the array
+      tasks.splice(randomIndexIntasks,1);  
+    }
 
-      function submit(){
-        // obtain tasks from input fields and populate them into an array
-        for(i = 0; i < taskInputBoxCount; i++){
-          try{
-            tasks.push(document.getElementById("a"+i).value);
-          }
-          catch(TypeError){}
-        }
-        // obtain people from input fields and populate them into an array
-        for(i = 0; i < peopleInputBoxCount; i++){
-          try{
-            people.push(document.getElementById("b"+i).value);
-          }
-          catch(TypeError){}
-        }
+    var numberOfRemainingElemsIntasks = tasks.length;
 
-        var tableToDisplay = distributeTasks(tasks, people.length);
+    // randomly pick a letter from the remaining letters
+    for(var i = 0; i < numberOfRemainingElemsIntasks; i++){
+      randomIndexIntasks = Math.floor((Math.random() * tasks.length));
 
-        // append names to the front of tasks
-        appendNames(people, tableToDisplay);
+      outputArray[i].push(tasks[randomIndexIntasks]);
 
-        // remove table from html
-        removeOutputTable();
+      tasks.splice(randomIndexIntasks, 1);
+    }   
+  }
+  // numberOfPeople > tasks.length
+  else{}
+  return outputArray;
+}
 
-        // pass tableToDisplay into a function to display in html
-        displayTable(tableToDisplay);
+function appendNames(people, tableToDisplay){
+  for(var i = 0; i < tableToDisplay.length; i++){
+    if(longestSubList < tableToDisplay[i].length){
+      longestSubList = tableToDisplay[i].length;
+    }
 
-        // once table has been displayed, empty the tasks and people arrays
-        tasks = [];
-        people = [];
-        longestSubList = 0;
-      }
+    tableToDisplay[i].unshift(people[i]);
+  }
+}
 
-      // remove output table from html
-      function removeOutputTable(){
-        var myTableDiv = document.getElementById("output_table");
-        myTableDiv.innerHTML = '';
-        while (myTableDiv.firstChild) {
-          myTableDiv.removeChild(myTableDiv.firstChild);
-        }      
-      }
+function displayTable(tableToDisplay){
+  var myTableDiv = document.getElementById("output_table");
+  var table = document.createElement('TABLE');
+  var tableBody = document.createElement('TBODY');
 
-      function distributeTasks(tasks, numberOfPeople){
-        // output
-        var outputArray = [];
-        for(var i = 0; i < numberOfPeople; i++){
-            outputArray.push([]);
-        }
+  table.border = '1'
+  table.appendChild(tableBody);
 
-        var origValOftasks = tasks.length;
-        var index = 0;
-        var taskCounter = 0;
-        var tasksPerPerson = Math.floor(tasks.length / numberOfPeople);
-        var randomIndexIntasks = 0;
+  var heading = ["Name"];
+  for(var i = 0; i < longestSubList; i++){
+    heading.push("Task " + (i+1))
+  }
 
-        // if tasks.length > numberOfPeople - come back to this later
-        if(/**tasks.length > numberOfPeople **/ true){
-            // populate output array
-            for(var i = 0; i < tasksPerPerson * numberOfPeople; i++){
+  //TABLE COLUMNS
+  var tr = document.createElement('TR');
+  tableBody.appendChild(tr);
+  for (i = 0; i < heading.length; i++) {
+    var th = document.createElement('TH')
+    th.width = '75';
+    th.appendChild(document.createTextNode(heading[i]));
+    tr.appendChild(th);
+  }
 
-                randomIndexIntasks = Math.floor((Math.random() * tasks.length));
+  //TABLE ROWS
+  for (i = 0; i < tableToDisplay.length; i++) {
+    var tr = document.createElement('TR');
+    for (j = 0; j < tableToDisplay[i].length; j++) {
+      var td = document.createElement('TD')
+      td.appendChild(document.createTextNode(tableToDisplay[i][j]));
+      tr.appendChild(td)
+    }
+    tableBody.appendChild(tr);
+  }
+  myTableDiv.appendChild(table);       
+}
 
-                if(taskCounter < tasksPerPerson){
-                    outputArray[index].push(tasks[randomIndexIntasks]);
-                    taskCounter++;
-                }
-                else{
-                    index++;
-                    outputArray[index].push(tasks[randomIndexIntasks]);
-                    taskCounter = 1;
-                }
-                // remove this value from the array
-                tasks.splice(randomIndexIntasks,1);  
-            }
+var taskAssigner = angular.module('taskAssigner', []);
+taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $http) {
+  console.log("Hello world from controller");
 
-            var numberOfRemainingElemsIntasks = tasks.length;
+  // when [Save Result] button is pressed
+  $scope.addResult = function(){
+    console.log($scope.resultName);
+    console.log(people);
+    console.log(outputArray);
 
-            // randomly pick a letter from the remaining letters
-            for(var i = 0; i < numberOfRemainingElemsIntasks; i++){
-                randomIndexIntasks = Math.floor((Math.random() * tasks.length));
+    var data = {
+      amount: 3,
+      currency: 2,
+      source: 3,
+      description: 4
+    };
 
-                outputArray[i].push(tasks[randomIndexIntasks]);
+    // call this post function in app.js
+    $http.post('/resultList', $scope.resultName).then(function(response){
+      console.log("response function: " + response);
+    });
+  }
 
-                tasks.splice(randomIndexIntasks, 1);
-            }   
-        }
-        // numberOfPeople > tasks.length
-        else{
-            
-        }
+  // when [Display] button is pressed
+  $scope.displayResult = function(){
+    console.log("Hello from displayResult");
+  }
 
-        return outputArray;
-      }
+  // when [Remove]  button is pressed
+  $scope.removeResult  = function(){
+    console.log("Hello from removeResult");
+  }
 
-      function appendNames(people, tableToDisplay){
-        for(var i = 0; i < tableToDisplay.length; i++){
-          if(longestSubList < tableToDisplay[i].length){
-            longestSubList = tableToDisplay[i].length;
-          }
-
-          tableToDisplay[i].unshift(people[i]);
-        }
-      }
-
-      function displayTable(tableToDisplay){
-        var myTableDiv = document.getElementById("output_table");
-        var table = document.createElement('TABLE');
-        var tableBody = document.createElement('TBODY');
-
-        table.border = '1'
-        table.appendChild(tableBody);
-
-        var heading = ["Name"];
-        for(var i = 0; i < longestSubList; i++){
-          heading.push("Task " + (i+1))
-        }
-
-        //TABLE COLUMNS
-        var tr = document.createElement('TR');
-        tableBody.appendChild(tr);
-        for (i = 0; i < heading.length; i++) {
-          var th = document.createElement('TH')
-          th.width = '75';
-          th.appendChild(document.createTextNode(heading[i]));
-          tr.appendChild(th);
-        }
-
-        //TABLE ROWS
-        for (i = 0; i < tableToDisplay.length; i++) {
-          var tr = document.createElement('TR');
-          for (j = 0; j < tableToDisplay[i].length; j++) {
-            var td = document.createElement('TD')
-            td.appendChild(document.createTextNode(tableToDisplay[i][j]));
-            tr.appendChild(td)
-          }
-          tableBody.appendChild(tr);
-        }
-        myTableDiv.appendChild(table);       
-      }
+}]);
