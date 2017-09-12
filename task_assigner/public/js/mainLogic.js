@@ -218,6 +218,10 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
     // call this post function in app.js
     $http.post('/resultList', data).then(function(response){
       console.log("response function: " + response);
+      getResults();
+    }, function(err){
+      console.log("An error happened");
+      console.log(err)
     });
   }
 

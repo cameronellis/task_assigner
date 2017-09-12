@@ -36,9 +36,10 @@ app.post('/resultList', function(req, res){
     	  				  people: req.body.people,
     	  				  outputArray: req.body.outputArray
     	  				};
-	  db.collection("resultList").insertOne(myobj, function(err, res) {
+	  db.collection("resultList").insertOne(myobj, function(err, result) {
 	    if (err) throw err;
 	    console.log("1 document inserted");
+      res.json(result);
 	    db.close();
 	  });
 	});
