@@ -187,6 +187,22 @@ var taskAssigner = angular.module('taskAssigner', []);
 taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $http) {
   console.log("Hello world from controller");
 
+  var getResults = function(){$http.get('/resultList')
+    .then(function(response){
+      // handling success
+      console.log("fetched stuff from the database");
+      console.log(response.data);
+      // $scope.resultList = ["a","b","c","d"];
+      $scope.resultList = response.data;
+    }, function(err){
+      console.log("An error happened");
+      console.log(err);
+    });
+  }
+
+  console.log("Things happening");
+  getResults();
+
   // when [Save Result] button is pressed
   $scope.addResult = function(){
     console.log($scope.resultName);
@@ -194,14 +210,13 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
     console.log(outputArray);
 
     var data = {
-      amount: 3,
-      currency: 2,
-      source: 3,
-      description: 4
+      resultName: $scope.resultName,
+      people: people,
+      outputArray: outputArray
     };
 
     // call this post function in app.js
-    $http.post('/resultList', $scope.resultName).then(function(response){
+    $http.post('/resultList', data).then(function(response){
       console.log("response function: " + response);
     });
   }
