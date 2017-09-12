@@ -143,7 +143,7 @@
             <tr ng-repeat="result in resultList">
               <!-- <td>{{result.resultName}}</td> -->
               <td>{{result.resultName}}</td>
-              <td><button class="btn btn-success" ng-click="displayResult()">Display</button></td>
+              <td><button class="btn btn-success" ng-click="displayResult(result._id)">Display</button></td>
               <td><button class="btn btn-danger"  ng-click="removeResult(result._id)">Remove</button></td>
             </tr>
           </tbody>

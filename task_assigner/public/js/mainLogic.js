@@ -222,8 +222,21 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
   }
 
   // when [Display] button is pressed
-  $scope.displayResult = function(){
+  $scope.displayResult = function(id){
     console.log("Hello from displayResult");
+    console.log("id: " + id);
+
+    var data = {
+      id: id
+    };
+
+    $http.get('/resultList/' + id, data).then(function(response){
+      console.log("responding from Display button press");
+      getResults();
+    }, function(err){
+      console.log(err);
+      console.log("An error happened");
+    });
   }
 
   // when [Remove]  button is pressed

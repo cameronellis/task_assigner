@@ -61,5 +61,20 @@ app.delete('/resultList/:id', function(req, res){
   });
 });
 
+app.get('/resultList/:id', function(req, res){
+  console.log("Hello from app.get for [Display]");
+  console.log(req.params.id);
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    db.collection("resultList").findOne({_id: ObjectId(req.params.id)}, function(err, result) {
+      if (err) throw err;
+      console.log("result:" + result);
+      res.json(result);
+      db.close();
+    });
+  });
+});
+
 app.listen(3000);
 console.log("Server running on port 3000");
