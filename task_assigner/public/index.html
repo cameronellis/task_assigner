@@ -143,35 +143,22 @@
             <tr ng-repeat="result in resultList">
               <td>{{result.resultName}}</td>
               <td>
-                <a class="btn btn-success btn-lg" href="#displayedResults" ng-click="displayResult(result._id)">Display</a>
+                <a class="btn btn-success" href="#displayedResults" ng-click="displayResult(result._id)">Display</a>
               </td>
 
-              <td><button class="btn btn-danger btn-lg"  ng-click="removeResult(result._id)">Remove</button></td>
+              <td><button class="btn btn-danger"  ng-click="removeResult(result._id)">Remove</button></td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <!-- Section to display the result -->
     <section id="displayedResults">
       <div class="container">
-        <p id="resultNameDisplay"></p>
-        <table>
-          <thead>
-            <tr>
-              <td>Name</td>
-              <td>Task 1</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Cameron</td>
-              <td>Water the plants</td>
-            </tr>
-          </tbody>
-        </table>
-
+        <h5 id="resultNameDisplay">Displaying results for: </h5>
       </div>
+      <div id="displayTable" class="container"></div>
     </section>
 
     <!-- Footer -->

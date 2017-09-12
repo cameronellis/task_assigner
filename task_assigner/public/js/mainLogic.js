@@ -58,9 +58,9 @@ function submit(){
   people = [];
   tableToDisplay = [];
   longestSubList = 0;
-  outputArray = []
+  outputArray = [];
   // remove table from html
-  removeOutputTable();
+  removeOutputTable("output_table");
 
   // obtain tasks from input fields and populate them into an array
   for(i = 0; i < taskInputBoxCount; i++){
@@ -77,31 +77,22 @@ function submit(){
     catch(TypeError){}
   }
 
-  // console.log("people: " + people);
-  // console.log("tasks: " + tasks);
-  console.log(tableToDisplay)
-
   tableToDisplay = distributeTasks(tasks, people.length);
 
   // append names to the front of tasks
   appendNames(people, tableToDisplay);
 
-  console.log("tableToDisplay below:");
-  console.log(tableToDisplay);
-  
-
   // pass tableToDisplay into a function to display in html
-  displayTable(tableToDisplay);
+  displayTable(tableToDisplay, "output_table");
 
 }
 
 // remove output table from html
-function removeOutputTable(){
-  var myTableDiv = document.getElementById("output_table");
+function removeOutputTable(id){
+  var myTableDiv = document.getElementById(id);
   while (myTableDiv.firstChild) {
     myTableDiv.removeChild(myTableDiv.firstChild);
-  } 
-  // myTableDiv.innerHTML = "";     
+  }     
 }
 
 function distributeTasks(tasks, numberOfPeople){
@@ -164,13 +155,15 @@ function appendNames(people, tableToDisplay){
   return tableToDisplay;
 }
 
-function displayTable(tableToDisplay){
-  var myTableDiv = document.getElementById("output_table");
+function displayTable(tableToDisplay, id){
+  var myTableDiv = document.getElementById(id);
   var table = document.createElement('TABLE');
   var tableBody = document.createElement('TBODY');
 
   table.border = '1'
   table.appendChild(tableBody);
+
+  // console.log("longestSubList: " + longestSubList);
 
   var heading = ["Name"];
   for(var i = 0; i < longestSubList; i++){
@@ -198,6 +191,16 @@ function displayTable(tableToDisplay){
     tableBody.appendChild(tr);
   }
   myTableDiv.appendChild(table);       
+}
+
+function calculateLongestSubList(a){
+  for(var i = 0; i < a.length; i++){
+    if(longestSubList < a[i].length){
+      longestSubList = a[i].length;
+    }    
+  }
+  // taking into account the "Name" row in "displayTable"
+  longestSubList -= 1;
 }
 
 var taskAssigner = angular.module('taskAssigner', []);
@@ -241,12 +244,17 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
   $scope.displayResult = function(id){
 
     $http.get('/resultList/' + id).then(function(response){
+      removeOutputTable("displayTable");
       // console.log("responding from Display button press");
       console.log(response.data[0].resultName);
       // display resultName in displayedResults
       document.getElementById("resultNameDisplay").textContent = "Displaying results for: " + response.data[0].resultName; 
-      console.log(response.data[0].people);
+      // console.log(response.data[0].people);
       console.log(response.data[0].outputArray);
+      // calcualte longest sub list in response.data[0].outputArray
+      calculateLongestSubList(response.data[0].outputArray);
+
+      displayTable(response.data[0].outputArray, "displayTable");
 
     }, function(err){
       console.log(err);
