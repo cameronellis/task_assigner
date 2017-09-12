@@ -10,6 +10,8 @@ var people = [];
 
 var outputArray = [];
 
+var tableToDisplay = [];
+
 // adds an input row to "The Tasks" section
 function addTaskRow() {
   var div = document.createElement('div');
@@ -54,7 +56,11 @@ function submit(){
   // once table has been displayed, empty the tasks and people arrays
   tasks = [];
   people = [];
+  tableToDisplay = [];
   longestSubList = 0;
+  outputArray = []
+  // remove table from html
+  removeOutputTable();
 
   // obtain tasks from input fields and populate them into an array
   for(i = 0; i < taskInputBoxCount; i++){
@@ -71,16 +77,18 @@ function submit(){
     catch(TypeError){}
   }
 
-  var tableToDisplay = distributeTasks(tasks, people.length);
+  // console.log("people: " + people);
+  // console.log("tasks: " + tasks);
+  console.log(tableToDisplay)
+
+  tableToDisplay = distributeTasks(tasks, people.length);
 
   // append names to the front of tasks
   appendNames(people, tableToDisplay);
 
-  // remove table from html
-  removeOutputTable();
-
-  console.log("people: " + people);
-  console.log("tableToDisplay: " + tableToDisplay);
+  console.log("tableToDisplay below:");
+  console.log(tableToDisplay);
+  
 
   // pass tableToDisplay into a function to display in html
   displayTable(tableToDisplay);
@@ -92,7 +100,8 @@ function removeOutputTable(){
   var myTableDiv = document.getElementById("output_table");
   while (myTableDiv.firstChild) {
     myTableDiv.removeChild(myTableDiv.firstChild);
-  }      
+  } 
+  // myTableDiv.innerHTML = "";     
 }
 
 function distributeTasks(tasks, numberOfPeople){
