@@ -189,10 +189,7 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
 
   var getResults = function(){$http.get('/resultList')
     .then(function(response){
-      // handling success
-      console.log("fetched stuff from the database");
       console.log(response.data);
-      // $scope.resultList = ["a","b","c","d"];
       $scope.resultList = response.data;
     }, function(err){
       console.log("An error happened");
@@ -200,7 +197,6 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
     });
   }
 
-  console.log("Things happening");
   getResults();
 
   // when [Save Result] button is pressed
@@ -221,7 +217,7 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
       getResults();
     }, function(err){
       console.log("An error happened");
-      console.log(err)
+      console.log(err);
     });
   }
 
@@ -231,8 +227,17 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
   }
 
   // when [Remove]  button is pressed
-  $scope.removeResult  = function(){
+  $scope.removeResult  = function(id){
     console.log("Hello from removeResult");
+    console.log("id: " + id);
+
+    $http.delete('/resultList/' + id).then(function(response){
+      console.log("responding from delete");
+      getResults();
+    }, function(err){
+      console.log("An error happened");
+      console.log(err);
+    });
   }
 
 }]);

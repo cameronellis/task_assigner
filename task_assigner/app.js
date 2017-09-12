@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectID;
+
 var url = "mongodb://localhost:27017/task_assigner";
 
 var bodyParser = require('body-parser');
@@ -9,8 +11,8 @@ var bodyParser = require('body-parser');
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
+// populate results in the Saved Results section
 app.get('/resultList', function(req, res){
-  console.log("going out to get stuff from the db now");
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -24,11 +26,9 @@ app.get('/resultList', function(req, res){
 
 });
 
-// insert document into collection
+// insert document into resultList collection
 app.post('/resultList', function(req, res){
-	// console.log("Is this working?");
-	// console.log(req);	// my data is in the req!
-	// console.log(req.body);
+
 	MongoClient.connect(url, function(err, db) {
 	  if (err) throw err;
 	  var myobj = { 
@@ -43,6 +43,22 @@ app.post('/resultList', function(req, res){
 	    db.close();
 	  });
 	});
+});
+
+app.delete('/resultList/:id', function(req, res){
+  console.log("Hello from app.delete");
+  console.log(req.params.id);
+
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var myquery = { _id: ObjectId(req.params.id)};
+    db.collection("resultList").deleteOne(myquery, function(err, obj) {
+      if (err) throw err;
+      console.log("1 document deleted");
+      res.json(obj);
+      db.close();
+    });
+  });
 });
 
 app.listen(3000);
