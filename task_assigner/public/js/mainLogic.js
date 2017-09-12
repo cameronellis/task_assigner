@@ -1,3 +1,5 @@
+// Global variables
+// determine how many "Task N" column headers to have
 var longestSubList = 0;
 
 var taskInputBoxCount = 0;
@@ -8,6 +10,7 @@ var people = [];
 
 var outputArray = [];
 
+// adds an input row to "The Tasks" section
 function addTaskRow() {
   var div = document.createElement('div');
 
@@ -22,10 +25,12 @@ function addTaskRow() {
   taskInputBoxCount += 1;
 }
 
+// removes selected input row in "The Tasks" section 
 function removeTaskRow(input) {
   document.getElementById('taskContent').removeChild( input.parentNode );
 }
-      
+
+// adds an input row to "The People" section    
 function addPeopleRow(){
   var div = document.createElement('div');
 
@@ -39,10 +44,12 @@ function addPeopleRow(){
   peopleInputBoxCount += 1;
 }
 
+// removes selected input row in "The People" section
 function removePeopleRow(input) {
   document.getElementById('peopleContent').removeChild( input.parentNode );
 }
 
+// Code to run when the down chevron in "The People" section is clicked
 function submit(){
   // once table has been displayed, empty the tasks and people arrays
   tasks = [];
@@ -89,7 +96,6 @@ function removeOutputTable(){
 }
 
 function distributeTasks(tasks, numberOfPeople){
-  // output
 
   for(var i = 0; i < numberOfPeople; i++){
     outputArray.push([]);
@@ -145,6 +151,8 @@ function appendNames(people, tableToDisplay){
 
     tableToDisplay[i].unshift(people[i]);
   }
+
+  return tableToDisplay;
 }
 
 function displayTable(tableToDisplay){
@@ -185,7 +193,6 @@ function displayTable(tableToDisplay){
 
 var taskAssigner = angular.module('taskAssigner', []);
 taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $http) {
-  console.log("Hello world from controller");
 
   var getResults = function(){$http.get('/resultList')
     .then(function(response){
@@ -223,20 +230,15 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
 
   // when [Display] button is pressed
   $scope.displayResult = function(id){
-    console.log("Hello from displayResult");
-    console.log("id: " + id);
 
-    var data = {
-      id: id
-    };
-
-    $http.get('/resultList/' + id, data).then(function(response){
-      console.log("responding from Display button press");
-      console.log(response.data);
-      console.log(response.data[0]);
+    $http.get('/resultList/' + id).then(function(response){
+      // console.log("responding from Display button press");
       console.log(response.data[0].resultName);
+      // display resultName in displayedResults
+      document.getElementById("resultNameDisplay").textContent = "Displaying results for: " + response.data[0].resultName; 
       console.log(response.data[0].people);
       console.log(response.data[0].outputArray);
+
     }, function(err){
       console.log(err);
       console.log("An error happened");

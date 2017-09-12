@@ -121,7 +121,7 @@
         <!-- Save results to a database -->
         <div>
           <input type="text" placeholder="Result name" ng-model="resultName"></input>
-          <input type="button" value="Save Result" ng-click="addResult()"></input>
+          <input type="button" value="Save Result" ng-click="addResult()" class="btn btn-success btn-lg"></input>
         </div>
       </div>
     </section>
@@ -134,20 +134,43 @@
         <table class="table">
           <thead>
             <tr>
-              <td>Result Name</td>
-              <td>Display Result</td>
-              <td>Remove Result</td>
+              <td><h5>Result Name</h5></td>
+              <td><h5>Display Result</h5></td>
+              <td><h5>Remove Result</h5></td>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="result in resultList">
-              <!-- <td>{{result.resultName}}</td> -->
               <td>{{result.resultName}}</td>
-              <td><button class="btn btn-success" ng-click="displayResult(result._id)">Display</button></td>
-              <td><button class="btn btn-danger"  ng-click="removeResult(result._id)">Remove</button></td>
+              <td>
+                <a class="btn btn-success btn-lg" href="#displayedResults" ng-click="displayResult(result._id)">Display</a>
+              </td>
+
+              <td><button class="btn btn-danger btn-lg"  ng-click="removeResult(result._id)">Remove</button></td>
             </tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <section id="displayedResults">
+      <div class="container">
+        <p id="resultNameDisplay"></p>
+        <table>
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Task 1</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Cameron</td>
+              <td>Water the plants</td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
     </section>
 
