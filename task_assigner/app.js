@@ -64,12 +64,13 @@ app.delete('/resultList/:id', function(req, res){
 app.get('/resultList/:id', function(req, res){
   console.log("Hello from app.get for [Display]");
   console.log(req.params.id);
+  console.log(ObjectId(req.params.id));
 
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
-    db.collection("resultList").findOne({_id: ObjectId(req.params.id)}, function(err, result) {
+    db.collection("resultList").find({ _id: ObjectId(req.params.id) }).toArray(function(err, result) {
       if (err) throw err;
-      console.log("result:" + result);
+      console.log(result);
       res.json(result);
       db.close();
     });

@@ -232,7 +232,11 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
 
     $http.get('/resultList/' + id, data).then(function(response){
       console.log("responding from Display button press");
-      getResults();
+      console.log(response.data);
+      console.log(response.data[0]);
+      console.log(response.data[0].resultName);
+      console.log(response.data[0].people);
+      console.log(response.data[0].outputArray);
     }, function(err){
       console.log(err);
       console.log("An error happened");
