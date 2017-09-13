@@ -26,6 +26,9 @@ a.task-button{
   margin-top: 15px;
 }
 
+a.displayButton{
+}
+
 h1,
 h2,
 h3,
@@ -309,11 +312,13 @@ th, td {
 }
 
 /* these two together center the input fields on the web page */
+/* Input fields */
 input {
   margin-left: auto;
   margin-right: 1em;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding: 10px;
 }
 
 input.resultNameField {
