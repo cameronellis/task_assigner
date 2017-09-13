@@ -20,7 +20,7 @@ function addTaskRow() {
 
   // append a to the front to have a unique id for tasks vs people
   div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
-    <input type='button' value='-' onclick='removeTaskRow(this)'>";
+    <button onclick='removeTaskRow(this)' class='btn btn-success btn-lg minusButton'>-</button>";
 
   document.getElementById('taskContent').appendChild(div);
 
@@ -38,8 +38,8 @@ function addPeopleRow(){
 
   div.className = 'row';
 
-  div.innerHTML = "<input type='text' name='name' id= '"+"b"+peopleInputBoxCount+"'/>\
-    <input type='button' value='-' onclick='removePeopleRow(this)'>";
+  div.innerHTML = "<input type='text' name='name' id= '"+"b"+peopleInputBoxCount+"'></input>\
+    <button onclick='removePeopleRow(this)' class='btn btn-success btn-lg minusButton'>-</button>";
       
   document.getElementById('peopleContent').appendChild(div);
 
