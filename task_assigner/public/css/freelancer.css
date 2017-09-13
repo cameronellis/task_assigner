@@ -296,10 +296,17 @@ table{
   margin-bottom: 2em;
   margin-left:auto;
   margin-right:auto;
-
 }
 
 /* Center the data inside the tables*/
 th, td {
   text-align: center;
+}
+
+input {
+  margin-left: auto;
+}
+
+button {
+  margin-right: auto;
 }
