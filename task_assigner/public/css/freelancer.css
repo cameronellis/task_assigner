@@ -22,6 +22,10 @@ a:hover {
   color: #18BC9C;
   outline: none; }
 
+a.task-button{
+  margin-top: 15px;
+}
+
 h1,
 h2,
 h3,
@@ -301,12 +305,34 @@ table{
 /* Center the data inside the tables*/
 th, td {
   text-align: center;
+  padding: 5px;
 }
 
+/* these two together center the input fields on the web page */
 input {
   margin-left: auto;
+  margin-right: 1em;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-button {
+input.resultNameField {
+  padding: 10px;
+  margin-top: 15px;
+}
+
+button.minusButton {
   margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+button.bodyButtons{
+  margin-top: 10px;
+}
+
+button.saveButton {
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
