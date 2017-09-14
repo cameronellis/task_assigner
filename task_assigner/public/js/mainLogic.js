@@ -81,13 +81,33 @@ function submit(){
     catch(TypeError){}
   }
 
-  tableToDisplay = distributeTasks(tasks, people.length);
+  // if tasks[] is empty and/or people[] is empty
+  if(tasks.length === 0 && people.length === 0){
+    console.log("tasks[] and people[] are empty");
+    document.getElementById("submitChevronErrorMessage").textContent = "Assignment unsuccessful: No tasks or people given";
+  }
+  else if(tasks.length === 0){
+    console.log("tasks[] is empty");
+    document.getElementById("submitChevronErrorMessage").textContent = "Assignment unsuccessful: No tasks given";
+  }
+  else if(people.length === 0){
+    console.log("people[] is empty");
+    document.getElementById("submitChevronErrorMessage").textContent = "Assignment unsuccessful: No people given";
+  }
+  else{
+    console.log("Both tasks[] and people[] have contents in them")
+    document.getElementById("submitChevronErrorMessage").textContent = "";
 
-  // append names to the front of tasks
-  appendNames(people, tableToDisplay);
+    tableToDisplay = distributeTasks(tasks, people.length);
 
-  // pass tableToDisplay into a function to display in html
-  displayTable(tableToDisplay, "output_table");
+    // append names to the front of tasks
+    appendNames(people, tableToDisplay);
+
+    // pass tableToDisplay into a function to display in html
+    displayTable(tableToDisplay, "output_table");
+  }
+
+
 
 }
 
