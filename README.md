@@ -3,3 +3,5 @@ Task Assigner is a simple bootstrap website that distributes tasks you give it t
 
 ## Preview
 ![Preview](https://i.imgur.com/ZXAYwki.png)
+![Preview2](https://i.imgur.com/xf5QCe8.png)
+![Preview3](https://i.imgur.com/uST7OpC.png)
