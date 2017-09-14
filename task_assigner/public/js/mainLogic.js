@@ -64,7 +64,7 @@ function submit(){
   longestSubList = 0;
   outputArray = [];
   // remove table from html
-  removeOutputTable("output_table");
+  removeTagContents("output_table");
 
   // obtain tasks from input fields and populate them into an array
   for(i = 0; i < taskInputBoxCount; i++){
@@ -92,7 +92,7 @@ function submit(){
 }
 
 // remove output table from html
-function removeOutputTable(id){
+function removeTagContents(id){
   var myTableDiv = document.getElementById(id);
   while (myTableDiv.firstChild) {
     myTableDiv.removeChild(myTableDiv.firstChild);
@@ -207,6 +207,11 @@ function calculateLongestSubList(a){
   longestSubList -= 1;
 }
 
+function inputClick(){
+  console.log("inputClick");
+  document.getElementById("saveResultOutputMessage").textContent = "";
+}
+
 var taskAssigner = angular.module('taskAssigner', []);
 taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $http) {
 
@@ -225,30 +230,37 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
   // when [Save Result] button is pressed
   $scope.addResult = function(){
     console.log($scope.resultName);
-    console.log(people);
     console.log(outputArray);
 
-    var data = {
-      resultName: $scope.resultName,
-      people: people,
-      outputArray: outputArray
-    };
+    // ensure that resultName has a name
+    if($scope.resultName === undefined || $scope.resultName === ""){
+      console.log("resultName is empty");
+      document.getElementById("saveResultOutputMessage").textContent = "Please specify a result name for this output";
+    }
+    else{
+      var data = {
+        resultName: $scope.resultName,
+        outputArray: outputArray
+      };
 
-    // call this post function in app.js
-    $http.post('/resultList', data).then(function(response){
-      console.log("response function: " + response);
-      getResults();
-    }, function(err){
-      console.log("An error happened");
-      console.log(err);
-    });
+      // call this post function in app.js
+      $http.post('/resultList', data).then(function(response){
+        console.log("response function: " + response);
+        getResults();
+      }, function(err){
+        console.log("An error happened");
+        console.log(err);
+      });
+
+      document.getElementById("saveResultOutputMessage").textContent = "Saved!";
+    }
   }
 
   // when [Display] button is pressed
   $scope.displayResult = function(id){
 
     $http.get('/resultList/' + id).then(function(response){
-      removeOutputTable("displayTable");
+      removeTagContents("displayTable");
       // console.log("responding from Display button press");
       console.log(response.data[0].resultName);
       // display resultName in displayedResults

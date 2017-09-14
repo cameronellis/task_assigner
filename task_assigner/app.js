@@ -33,7 +33,6 @@ app.post('/resultList', function(req, res){
 	  if (err) throw err;
 	  var myobj = { 
                   resultName: req.body.resultName, 
-    	  				  people: req.body.people,
     	  				  outputArray: req.body.outputArray
     	  				};
 	  db.collection("resultList").insertOne(myobj, function(err, result) {
