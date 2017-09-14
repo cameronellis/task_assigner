@@ -251,11 +251,19 @@ taskAssigner.controller('controlResults', ['$scope','$http', function($scope, $h
   $scope.addResult = function(){
     console.log($scope.resultName);
     console.log(outputArray);
+    console.log("outputArray.length: " + outputArray.length);
 
     // ensure that resultName has a name
     if($scope.resultName === undefined || $scope.resultName === ""){
       console.log("resultName is empty");
       document.getElementById("saveResultOutputMessage").textContent = "Please specify a result name for this output";
+    }
+    else if(outputArray.length === 0){
+      console.log("outputArray:");
+      console.log(outputArray);
+
+      console.log("No result table has been generated to save");
+      document.getElementById("saveResultOutputMessage").textContent = "No result table has been generated to save";
     }
     else{
       var data = {
