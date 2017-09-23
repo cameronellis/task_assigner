@@ -14,15 +14,27 @@ var tableToDisplay = [];
 
 // adds an input row to "The Tasks" section
 function addTaskRow() {
-  var div = document.createElement('div');
-
-  div.className = 'row';
+  let div = document.createElement('div');
+  let inputBox  = document.createElement("input");
+  let deleteButton = document.createElement("button");    
 
   // append a to the front to have a unique id for tasks vs people
-  div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
-    <button onclick='removeTaskRow(this)' class='btn btn-success btn-lg minusButton'>\
-      <i class='fa fa-minus fa-fw'></i>\
-    </button>";
+  // div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
+  //   <button onclick='removeTaskRow(this)' class='btn btn-success btn-lg minusButton'>\
+  //     <i class='fa fa-minus fa-fw'></i>\
+  //   </button>";
+
+  inputBox.type = "text";
+  inputBox.id = "a" + taskInputBoxCount;
+
+  deleteButton.id = taskInputBoxCount;
+  deleteButton.setAttribute('onClick','removeTaskRow(this)');
+  deleteButton.setAttribute('class',"btn btn-success btn-lg minusButton");
+  deleteButton.textContent = "-";
+
+  div.appendChild(inputBox);
+  div.appendChild(deleteButton);
+  div.appendChild(document.createElement("br"));
 
   document.getElementById('taskContent').appendChild(div);
 
@@ -36,14 +48,21 @@ function removeTaskRow(input) {
 
 // adds an input row to "The People" section    
 function addPeopleRow(){
-  var div = document.createElement('div');
+  let div = document.createElement('div');
+  let inputBox = document.createElement("input");
+  let deleteButton = document.createElement("button");
 
-  div.className = 'row';
+  inputBox.type = "text";
+  inputBox.id = "b" + peopleInputBoxCount;
 
-  div.innerHTML = "<input type='text' name='name' id= '"+"b"+peopleInputBoxCount+"'></input>\
-    <button onclick='removePeopleRow(this)' class='btn btn-outline btn-lg minusButton'>\
-      <i class='fa fa-minus fa-fw'></i>\
-    </button>";
+  deleteButton.id = peopleInputBoxCount;
+  deleteButton.setAttribute('onClick', 'removePeopleRow(this)');
+  deleteButton.setAttribute('class', "btn btn-outline btn-lg minusButton");
+  deleteButton.textContent = "-";
+
+  div.appendChild(inputBox);
+  div.appendChild(deleteButton);
+  div.appendChild(document.createElement("br"));
       
   document.getElementById('peopleContent').appendChild(div);
 
