@@ -17,12 +17,9 @@ function addTaskRow() {
   let div = document.createElement('div');
   let inputBox  = document.createElement("input");
   let deleteButton = document.createElement("button");    
+  let iTag = document.createElement("i");
 
-  // append a to the front to have a unique id for tasks vs people
-  // div.innerHTML = "<input type='text' name='name' id= '"+"a"+taskInputBoxCount+"'/>\
-  //   <button onclick='removeTaskRow(this)' class='btn btn-success btn-lg minusButton'>\
-  //     <i class='fa fa-minus fa-fw'></i>\
-  //   </button>";
+  iTag.setAttribute('class', 'fa fa-minus fa-fw');
 
   inputBox.type = "text";
   inputBox.id = "a" + taskInputBoxCount;
@@ -30,7 +27,8 @@ function addTaskRow() {
   deleteButton.id = taskInputBoxCount;
   deleteButton.setAttribute('onClick','removeTaskRow(this)');
   deleteButton.setAttribute('class',"btn btn-success btn-lg minusButton");
-  deleteButton.textContent = "-";
+
+  deleteButton.appendChild(iTag);
 
   div.appendChild(inputBox);
   div.appendChild(deleteButton);
@@ -51,6 +49,9 @@ function addPeopleRow(){
   let div = document.createElement('div');
   let inputBox = document.createElement("input");
   let deleteButton = document.createElement("button");
+  let iTag = document.createElement("i");
+
+  iTag.setAttribute('class', 'fa fa-minus fa-fw');
 
   inputBox.type = "text";
   inputBox.id = "b" + peopleInputBoxCount;
@@ -58,7 +59,8 @@ function addPeopleRow(){
   deleteButton.id = peopleInputBoxCount;
   deleteButton.setAttribute('onClick', 'removePeopleRow(this)');
   deleteButton.setAttribute('class', "btn btn-outline btn-lg minusButton");
-  deleteButton.textContent = "-";
+
+  deleteButton.appendChild(iTag);
 
   div.appendChild(inputBox);
   div.appendChild(deleteButton);
